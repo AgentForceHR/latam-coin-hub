@@ -5,6 +5,7 @@ import { auth, AuthRequest } from '../middleware/auth.js';
 import { calculateHealthFactor, generateMockTxHash, isLiquidatable, calculateLiquidationPenalty } from '../utils/helpers.js';
 import { getMessage } from '../utils/translations.js';
 import { logger } from '../utils/logger.js';
+import { morphoService } from '../services/morpho.js';
 import type { Language } from '../types/index.js';
 
 const router = Router();
@@ -255,6 +256,83 @@ router.post('/liquidate/:positionId', auth, async (req: AuthRequest, res: Respon
     });
   } catch (error) {
     logger.error('Liquidation error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/morpho/positions', auth, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+    const { vaultId } = req.query;
+
+    const positions = await morphoService.getUserPositions(
+      userId,
+      vaultId as string | undefined
+    );
+
+    res.json({ positions });
+  } catch (error) {
+    logger.error('Get Morpho positions error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.post('/morpho/track-deposit', auth, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+    const { vaultId, amount, shares, txHash } = req.body;
+
+    if (!vaultId || !amount || !txHash) {
+      res.status(400).json({ error: 'Missing required fields' });
+      return;
+    }
+
+    const position = await morphoService.trackDeposit(
+      userId,
+      vaultId,
+      parseFloat(amount),
+      parseFloat(shares || '0'),
+      txHash
+    );
+
+    logger.info('Morpho deposit tracked:', { userId, vaultId, amount, txHash });
+
+    res.json({
+      message: 'Deposit tracked successfully',
+      position
+    });
+  } catch (error) {
+    logger.error('Track Morpho deposit error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.post('/morpho/track-withdrawal', auth, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+    const { vaultId, amount, shares, txHash } = req.body;
+
+    if (!vaultId || !amount || !txHash) {
+      res.status(400).json({ error: 'Missing required fields' });
+      return;
+    }
+
+    const position = await morphoService.trackWithdrawal(
+      userId,
+      vaultId,
+      parseFloat(amount),
+      parseFloat(shares || '0'),
+      txHash
+    );
+
+    logger.info('Morpho withdrawal tracked:', { userId, vaultId, amount, txHash });
+
+    res.json({
+      message: 'Withdrawal tracked successfully',
+      position
+    });
+  } catch (error) {
+    logger.error('Track Morpho withdrawal error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

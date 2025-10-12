@@ -61,6 +61,16 @@ async function main() {
   console.log("✅ Staking Contract deployed to:", stakingAddress);
   console.log("");
 
+  // 6. Deploy Morpho Vault Adapter
+  console.log("6. Deploying Morpho Vault Adapter...");
+  const MorphoVaultAdapter = await ethers.getContractFactory("MorphoVaultAdapter");
+  const morphoAdapter = await MorphoVaultAdapter.deploy();
+  await morphoAdapter.waitForDeployment();
+  const morphoAddress = await morphoAdapter.getAddress();
+  deployedContracts.morphoAdapter = morphoAddress;
+  console.log("✅ Morpho Adapter deployed to:", morphoAddress);
+  console.log("");
+
   // Save addresses to file
   const deploymentsPath = path.join(__dirname, '../deployments.json');
   fs.writeFileSync(

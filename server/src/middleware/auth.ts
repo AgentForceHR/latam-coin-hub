@@ -6,7 +6,6 @@ import { logger } from '../utils/logger.js';
 
 export interface AuthRequest extends Request {
   user?: User;
-  header?: (name: string) => string | undefined;
 }
 
 export const auth = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {

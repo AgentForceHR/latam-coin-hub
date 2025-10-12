@@ -6,16 +6,38 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { TrendingUp, ArrowUpRight, Lock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { morphoService, type MorphoVault } from "@/services/morpho";
 
-const mockVaults = [
-  { asset: "USDC-BRL", apy: 6.5, tvl: "$500M", risk: "Low" },
-  { asset: "USDT-USD", apy: 5.2, tvl: "$1.2B", risk: "Low" },
-  { asset: "DAI-ARS", apy: 8.3, tvl: "$250M", risk: "Medium" },
-  { asset: "USDC-MXN", apy: 7.1, tvl: "$180M", risk: "Medium" },
-];
+const formatTVL = (tvl: bigint): string => {
+  const tvlNum = Number(tvl) / 1e18;
+  if (tvlNum >= 1e9) return `$${(tvlNum / 1e9).toFixed(1)}B`;
+  if (tvlNum >= 1e6) return `$${(tvlNum / 1e6).toFixed(1)}M`;
+  return `$${tvlNum.toFixed(0)}`;
+};
 
 const Earn = () => {
   const { t } = useLanguage();
+  const [morphoVaults, setMorphoVaults] = useState<MorphoVault[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadMorphoVaults();
+  }, []);
+
+  const loadMorphoVaults = async () => {
+    try {
+      const vaults = await morphoService.getVaults();
+      setMorphoVaults(vaults);
+    } catch (error) {
+      console.error('Failed to load Morpho vaults:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const featuredVault = morphoVaults.length > 0 ? morphoVaults[0] : null;
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -35,14 +57,24 @@ const Earn = () => {
                   <Badge className="mb-2 bg-success/20 text-success border-success/50">
                     {t("featuredVault")}
                   </Badge>
-                  <h2 className="text-3xl font-bold mb-2">{t("morphoVault")}</h2>
+                  <h2 className="text-3xl font-bold mb-2">
+                    {featuredVault ? featuredVault.name : t("morphoVault")}
+                  </h2>
                   <p className="text-muted-foreground">
-                    {t("vaultDescription")}
+                    {featuredVault ? featuredVault.description : t("vaultDescription")}
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-bold text-success mb-1">6.5% APY</div>
-                  <div className="text-sm text-muted-foreground">$500M TVL</div>
+                  {loading ? (
+                    <div className="text-2xl text-muted-foreground">Loading...</div>
+                  ) : featuredVault ? (
+                    <>
+                      <div className="text-4xl font-bold text-success mb-1">{featuredVault.apy}% APY</div>
+                      <div className="text-sm text-muted-foreground">{formatTVL(featuredVault.tvl)} TVL</div>
+                    </>
+                  ) : (
+                    <div className="text-4xl font-bold text-success mb-1">6.5% APY</div>
+                  )}
                 </div>
               </div>
             </CardContent>
@@ -71,29 +103,46 @@ const Earn = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {mockVaults.map((vault) => (
-                    <TableRow key={vault.asset}>
-                      <TableCell className="font-medium">{vault.asset}</TableCell>
-                      <TableCell>
-                        <span className="text-success font-semibold">{vault.apy}%</span>
-                      </TableCell>
-                      <TableCell>{vault.tvl}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={vault.risk === "Low" ? "secondary" : "outline"}
-                          className={vault.risk === "Low" ? "bg-success/20 text-success border-success/50" : ""}
-                        >
-                          {vault.risk === "Low" ? t("low") : t("medium")}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button size="sm" className="gradient-hero">
-                          {t("deposit")}
-                          <ArrowUpRight className="ml-2 h-4 w-4" />
-                        </Button>
+                  {loading ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                        Loading vaults...
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ) : morphoVaults.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                        No vaults available
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    morphoVaults.map((vault) => {
+                      const riskLevel = vault.apy > 10 ? "medium" : "low";
+                      return (
+                        <TableRow key={vault.id}>
+                          <TableCell className="font-medium">{vault.name}</TableCell>
+                          <TableCell>
+                            <span className="text-success font-semibold">{vault.apy}%</span>
+                          </TableCell>
+                          <TableCell>{formatTVL(vault.tvl)}</TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={riskLevel === "low" ? "secondary" : "outline"}
+                              className={riskLevel === "low" ? "bg-success/20 text-success border-success/50" : ""}
+                            >
+                              {riskLevel === "low" ? t("low") : t("medium")}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <Button size="sm" className="gradient-hero">
+                              {t("deposit")}
+                              <ArrowUpRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
