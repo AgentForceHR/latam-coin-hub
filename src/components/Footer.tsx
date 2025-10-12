@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Twitter, Send, FileText, Book } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="border-t border-border bg-card/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -14,56 +17,56 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Empowering Latin American finance through decentralized stablecoins and DeFi protocols.
+              {t("footerDescription")}
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Protocol</h3>
+            <h3 className="font-semibold mb-4">{t("protocol")}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link to="/dashboard" className="hover:text-foreground transition-colors">
-                  Dashboard
+                  {t("dashboard")}
                 </Link>
               </li>
               <li>
                 <Link to="/earn" className="hover:text-foreground transition-colors">
-                  Earn Yields
+                  {t("earnYield")}
                 </Link>
               </li>
               <li>
                 <Link to="/borrow" className="hover:text-foreground transition-colors">
-                  Borrow
+                  {t("borrow")}
                 </Link>
               </li>
               <li>
                 <Link to="/governance" className="hover:text-foreground transition-colors">
-                  Governance
+                  {t("governance")}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
+            <h3 className="font-semibold mb-4">{t("resources")}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground transition-colors flex items-center gap-2">
                   <FileText className="h-4 w-4" />
-                  Whitepaper
+                  {t("whitepaper")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors flex items-center gap-2">
                   <Book className="h-4 w-4" />
-                  Documentation
+                  {t("documentation")}
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Community</h3>
+            <h3 className="font-semibold mb-4">{t("community")}</h3>
             <div className="flex space-x-4">
               <a
                 href="#"
@@ -84,7 +87,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>© 2025 LATAM DeFi. All rights reserved.</p>
+          <p>{t("rights")}</p>
         </div>
       </div>
     </footer>

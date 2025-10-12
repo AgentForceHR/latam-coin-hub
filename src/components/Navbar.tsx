@@ -3,15 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Wallet, Menu } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   const navLinks = [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Earn", href: "/earn" },
-    { name: "Borrow", href: "/borrow" },
-    { name: "Governance", href: "/governance" },
+    { name: t("dashboard"), href: "/dashboard" },
+    { name: t("earn"), href: "/earn" },
+    { name: t("borrow"), href: "/borrow" },
+    { name: t("governance"), href: "/governance" },
   ];
 
   return (
@@ -26,7 +29,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -36,9 +39,10 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <LanguageSwitcher />
             <Button variant="default" className="gradient-hero">
               <Wallet className="mr-2 h-4 w-4" />
-              Connect Wallet
+              {t("connectWallet")}
             </Button>
           </div>
 
@@ -61,9 +65,13 @@ const Navbar = () => {
                     {link.name}
                   </Link>
                 ))}
+                <div className="flex items-center gap-2">
+                  <LanguageSwitcher />
+                  <span className="text-sm text-muted-foreground">Language</span>
+                </div>
                 <Button variant="default" className="gradient-hero w-full">
                   <Wallet className="mr-2 h-4 w-4" />
-                  Connect Wallet
+                  {t("connectWallet")}
                 </Button>
               </div>
             </SheetContent>

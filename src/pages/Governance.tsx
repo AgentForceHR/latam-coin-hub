@@ -5,38 +5,40 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Users, ThumbsUp, ThumbsDown, Clock } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const mockProposals = [
   {
     id: 1,
-    title: "Add MXN Stablecoin Peg",
-    description: "Proposal to add Mexican Peso (MXN) as a new stablecoin peg to expand LATAM coverage",
+    titleKey: "proposalMxn" as const,
+    descriptionKey: "proposalMxnDesc" as const,
     votesFor: 12500,
     votesAgainst: 3200,
     status: "Active",
-    endsIn: "3 days",
+    endsIn: "3",
   },
   {
     id: 2,
-    title: "Increase Morpho Vault APY Pool",
-    description: "Allocate additional treasury funds to boost yields in USDC-BRL vault",
+    titleKey: "proposalVault" as const,
+    descriptionKey: "proposalVaultDesc" as const,
     votesFor: 8900,
     votesAgainst: 1100,
     status: "Active",
-    endsIn: "5 days",
+    endsIn: "5",
   },
   {
     id: 3,
-    title: "Lower Collateralization Ratio to 140%",
-    description: "Reduce minimum collateralization ratio from 150% to 140% for experienced borrowers",
+    titleKey: "proposalRatio" as const,
+    descriptionKey: "proposalRatioDesc" as const,
     votesFor: 5200,
     votesAgainst: 8700,
     status: "Active",
-    endsIn: "2 days",
+    endsIn: "2",
   },
 ];
 
 const Governance = () => {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -44,8 +46,8 @@ const Governance = () => {
       <main className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Governance</h1>
-            <p className="text-muted-foreground">Participate in protocol decisions by voting on proposals</p>
+            <h1 className="text-4xl font-bold mb-2">{t("governancePageTitle")}</h1>
+            <p className="text-muted-foreground">{t("governanceSubtitle")}</p>
           </div>
 
           {/* Voting Power Card */}
@@ -53,14 +55,14 @@ const Governance = () => {
             <CardContent className="p-8">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold mb-2">Your Voting Power</h2>
+                  <h2 className="text-2xl font-bold mb-2">{t("votingPower")}</h2>
                   <p className="text-muted-foreground">
-                    Stake LATAM tokens to increase your voting influence
+                    {t("votingPowerDescription")}
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-bold text-primary mb-1">1,250 Votes</div>
-                  <div className="text-sm text-muted-foreground">From staked LATAM tokens</div>
+                  <div className="text-4xl font-bold text-primary mb-1">1,250 {t("votes")}</div>
+                  <div className="text-sm text-muted-foreground">{t("fromStaked")}</div>
                 </div>
               </div>
             </CardContent>
@@ -73,6 +75,42 @@ const Governance = () => {
               const forPercentage = (proposal.votesFor / totalVotes) * 100;
               const againstPercentage = (proposal.votesAgainst / totalVotes) * 100;
 
+              // Get title and description based on language
+              const getProposalContent = () => {
+                const { language } = { language: t("active") === "Active" ? "en" : t("active") === "Activo" ? "es" : "pt" };
+                
+                if (proposal.titleKey === "proposalMxn") {
+                  return {
+                    title: language === "es" ? "Agregar Stablecoin MXN" : language === "pt" ? "Adicionar Stablecoin MXN" : "Add MXN Stablecoin Peg",
+                    description: language === "es" 
+                      ? "Propuesta para agregar el Peso Mexicano (MXN) como un nuevo stablecoin para expandir la cobertura LATAM"
+                      : language === "pt"
+                      ? "Proposta para adicionar o Peso Mexicano (MXN) como uma nova stablecoin para expandir a cobertura LATAM"
+                      : "Proposal to add Mexican Peso (MXN) as a new stablecoin peg to expand LATAM coverage"
+                  };
+                }
+                if (proposal.titleKey === "proposalVault") {
+                  return {
+                    title: language === "es" ? "Aumentar Pool APY Bóveda Morpho" : language === "pt" ? "Aumentar Pool APY Cofre Morpho" : "Increase Morpho Vault APY Pool",
+                    description: language === "es"
+                      ? "Asignar fondos adicionales del tesoro para aumentar los rendimientos en la bóveda USDC-BRL"
+                      : language === "pt"
+                      ? "Alocar fundos adicionais do tesouro para aumentar os rendimentos no cofre USDC-BRL"
+                      : "Allocate additional treasury funds to boost yields in USDC-BRL vault"
+                  };
+                }
+                return {
+                  title: language === "es" ? "Reducir Ratio de Colateralización a 140%" : language === "pt" ? "Reduzir Índice de Colateralização para 140%" : "Lower Collateralization Ratio to 140%",
+                  description: language === "es"
+                    ? "Reducir el ratio mínimo de colateralización de 150% a 140% para prestatarios experimentados"
+                    : language === "pt"
+                    ? "Reduzir o índice mínimo de colateralização de 150% para 140% para mutuários experientes"
+                    : "Reduce minimum collateralization ratio from 150% to 140% for experienced borrowers"
+                };
+              };
+
+              const content = getProposalContent();
+
               return (
                 <Card key={proposal.id} className="glass-card shadow-card">
                   <CardHeader>
@@ -80,15 +118,15 @@ const Governance = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <Badge className="bg-success/20 text-success border-success/50">
-                            {proposal.status}
+                            {t("active")}
                           </Badge>
                           <div className="flex items-center gap-1 text-sm text-muted-foreground">
                             <Clock className="h-4 w-4" />
-                            {proposal.endsIn}
+                            {proposal.endsIn} {t("days")}
                           </div>
                         </div>
-                        <CardTitle className="text-2xl mb-2">{proposal.title}</CardTitle>
-                        <CardDescription>{proposal.description}</CardDescription>
+                        <CardTitle className="text-2xl mb-2">{content.title}</CardTitle>
+                        <CardDescription>{content.description}</CardDescription>
                       </div>
                     </div>
                   </CardHeader>
@@ -97,11 +135,11 @@ const Governance = () => {
                       <div className="flex justify-between text-sm">
                         <span className="flex items-center gap-2 text-success">
                           <ThumbsUp className="h-4 w-4" />
-                          For: {proposal.votesFor.toLocaleString()} ({forPercentage.toFixed(1)}%)
+                          {t("for")}: {proposal.votesFor.toLocaleString()} ({forPercentage.toFixed(1)}%)
                         </span>
                         <span className="flex items-center gap-2 text-destructive">
                           <ThumbsDown className="h-4 w-4" />
-                          Against: {proposal.votesAgainst.toLocaleString()} ({againstPercentage.toFixed(1)}%)
+                          {t("against")}: {proposal.votesAgainst.toLocaleString()} ({againstPercentage.toFixed(1)}%)
                         </span>
                       </div>
                       <Progress value={forPercentage} className="h-3" />
@@ -110,11 +148,11 @@ const Governance = () => {
                     <div className="flex gap-4">
                       <Button className="flex-1 bg-success/20 hover:bg-success/30 text-success border border-success/50">
                         <ThumbsUp className="mr-2 h-4 w-4" />
-                        Vote For
+                        {t("voteFor")}
                       </Button>
                       <Button className="flex-1 bg-destructive/20 hover:bg-destructive/30 text-destructive border border-destructive/50">
                         <ThumbsDown className="mr-2 h-4 w-4" />
-                        Vote Against
+                        {t("voteAgainst")}
                       </Button>
                     </div>
                   </CardContent>
@@ -128,25 +166,25 @@ const Governance = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-primary" />
-                Delegate Voting Power
+                {t("delegateVoting")}
               </CardTitle>
               <CardDescription>
-                Delegate your votes to a trusted community member or validator
+                {t("delegateDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col sm:flex-row gap-4">
                 <input
                   type="text"
-                  placeholder="Enter delegate address (0x...)"
+                  placeholder={t("enterDelegate")}
                   className="flex-1 px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <Button className="gradient-hero">
-                  Delegate Votes
+                  {t("delegateVotes")}
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
-                Delegating allows experienced community members to vote on your behalf. You can revoke delegation at any time.
+                {t("delegateInfo")}
               </p>
             </CardContent>
           </Card>
