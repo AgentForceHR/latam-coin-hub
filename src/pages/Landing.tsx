@@ -5,6 +5,7 @@ import { ArrowRight, TrendingUp, Lock, Coins, Users, DollarSign, BarChart } from
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const mockGrowthData = [
   { month: "Jan", apy: 5.2 },
@@ -16,6 +17,7 @@ const mockGrowthData = [
 ];
 
 const Landing = () => {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -25,34 +27,34 @@ const Landing = () => {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-              Empowering{" "}
+              {t("heroTitle")}{" "}
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                LATAM Finance
+                {t("heroTitleHighlight")}
               </span>
-              {" "}with Stablecoins & DeFi
+              {" "}{t("heroTitleEnd")}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Hedge against inflation with USD, BRL, and ARS-pegged stablecoins. Earn 4-8% APY, borrow against collateral, and participate in governance.
+              {t("heroSubtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="gradient-hero text-lg px-8 shadow-glow">
-                Get Started Free
+                {t("getStarted")}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Link to="/dashboard">
                 <Button size="lg" variant="outline" className="text-lg px-8">
-                  View Dashboard
+                  {t("viewDashboard")}
                 </Button>
               </Link>
             </div>
             <div className="flex flex-wrap gap-8 justify-center text-sm text-muted-foreground pt-8">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-success animate-glow" />
-                <span>124% Inflation Hedge (ARG)</span>
+                <span>{t("inflationHedge")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-accent animate-glow" />
-                <span>$318B Crypto Volume</span>
+                <span>{t("cryptoVolume")}</span>
               </div>
             </div>
           </div>
@@ -69,7 +71,7 @@ const Landing = () => {
                   <CardTitle className="text-3xl font-bold">$1B</CardTitle>
                   <DollarSign className="h-8 w-8 text-primary" />
                 </div>
-                <CardDescription>Total Value Locked</CardDescription>
+                <CardDescription>{t("tvl")}</CardDescription>
               </CardHeader>
             </Card>
             <Card className="glass-card shadow-card">
@@ -78,7 +80,7 @@ const Landing = () => {
                   <CardTitle className="text-3xl font-bold">1M+</CardTitle>
                   <Users className="h-8 w-8 text-secondary" />
                 </div>
-                <CardDescription>Active Users</CardDescription>
+                <CardDescription>{t("activeUsers")}</CardDescription>
               </CardHeader>
             </Card>
             <Card className="glass-card shadow-card">
@@ -87,7 +89,7 @@ const Landing = () => {
                   <CardTitle className="text-3xl font-bold">$100B</CardTitle>
                   <BarChart className="h-8 w-8 text-accent" />
                 </div>
-                <CardDescription>Projected Volume</CardDescription>
+                <CardDescription>{t("projectedVolume")}</CardDescription>
               </CardHeader>
             </Card>
           </div>
@@ -99,10 +101,10 @@ const Landing = () => {
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">
-              Built for Latin America
+              {t("builtForLatam")}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive DeFi services designed for the unique needs of LATAM users
+              {t("builtSubtitle")}
             </p>
           </div>
 
@@ -110,9 +112,9 @@ const Landing = () => {
             <Card className="glass-card shadow-card hover:shadow-glow transition-all">
               <CardHeader>
                 <Coins className="h-12 w-12 text-primary mb-4" />
-                <CardTitle>Mint Stablecoins</CardTitle>
+                <CardTitle>{t("mintStablecoins")}</CardTitle>
                 <CardDescription className="text-base">
-                  Create USD, BRL, and ARS-pegged stablecoins to protect against inflation
+                  {t("mintDescription")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -120,9 +122,9 @@ const Landing = () => {
             <Card className="glass-card shadow-card hover:shadow-glow transition-all">
               <CardHeader>
                 <TrendingUp className="h-12 w-12 text-secondary mb-4" />
-                <CardTitle>Earn 4-8% APY</CardTitle>
+                <CardTitle>{t("earnYield")}</CardTitle>
                 <CardDescription className="text-base">
-                  Deposit assets into Morpho vaults and earn competitive yields
+                  {t("earnDescription")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -130,9 +132,9 @@ const Landing = () => {
             <Card className="glass-card shadow-card hover:shadow-glow transition-all">
               <CardHeader>
                 <Lock className="h-12 w-12 text-accent mb-4" />
-                <CardTitle>Borrow Assets</CardTitle>
+                <CardTitle>{t("borrowAssets")}</CardTitle>
                 <CardDescription className="text-base">
-                  Access overcollateralized loans with competitive interest rates
+                  {t("borrowDescription")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -140,9 +142,9 @@ const Landing = () => {
             <Card className="glass-card shadow-card hover:shadow-glow transition-all">
               <CardHeader>
                 <Users className="h-12 w-12 text-warning mb-4" />
-                <CardTitle>Governance</CardTitle>
+                <CardTitle>{t("governanceTitle")}</CardTitle>
                 <CardDescription className="text-base">
-                  Stake LATAM tokens and participate in protocol decisions
+                  {t("governanceDescription")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -155,9 +157,9 @@ const Landing = () => {
         <div className="container mx-auto max-w-4xl">
           <Card className="glass-card shadow-card">
             <CardHeader>
-              <CardTitle className="text-2xl">Yield Growth Over Time</CardTitle>
+              <CardTitle className="text-2xl">{t("yieldGrowth")}</CardTitle>
               <CardDescription>
-                Historical APY performance across our protocol
+                {t("yieldGrowthDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -193,13 +195,13 @@ const Landing = () => {
           <Card className="glass-card shadow-glow">
             <CardContent className="p-12 text-center">
               <h2 className="text-4xl font-bold mb-4">
-                Ready to Start Earning?
+                {t("readyToEarn")}
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of LATAM users already earning yields and protecting their wealth
+                {t("readySubtitle")}
               </p>
               <Button size="lg" className="gradient-hero text-lg px-8 shadow-glow">
-                Connect Wallet & Start
+                {t("connectAndStart")}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </CardContent>

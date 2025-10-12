@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wallet, TrendingUp, DollarSign, Coins } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const mockBalanceData = [
   { date: "Jan", balance: 1000 },
@@ -14,6 +15,7 @@ const mockBalanceData = [
 ];
 
 const Dashboard = () => {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -21,15 +23,15 @@ const Dashboard = () => {
       <main className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
-            <p className="text-muted-foreground">Overview of your DeFi positions and earnings</p>
+            <h1 className="text-4xl font-bold mb-2">{t("dashboardTitle")}</h1>
+            <p className="text-muted-foreground">{t("dashboardSubtitle")}</p>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <Card className="glass-card shadow-card">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Stablecoin Balance</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("stablecoinBalance")}</CardTitle>
                 <Coins className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -42,39 +44,39 @@ const Dashboard = () => {
 
             <Card className="glass-card shadow-card">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Morpho Yields Earned</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("morphoYields")}</CardTitle>
                 <TrendingUp className="h-4 w-4 text-success" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-success">$186.42</div>
                 <p className="text-xs text-muted-foreground">
-                  +12.5% from last month
+                  +12.5% {t("fromLastMonth")}
                 </p>
               </CardContent>
             </Card>
 
             <Card className="glass-card shadow-card">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Borrow Positions</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("borrowPositions")}</CardTitle>
                 <DollarSign className="h-4 w-4 text-warning" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">$750.00</div>
                 <p className="text-xs text-muted-foreground">
-                  Health factor: 2.5
+                  {t("healthFactor")} 2.5
                 </p>
               </CardContent>
             </Card>
 
             <Card className="glass-card shadow-card">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Staked LATAM</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("stakedLatam")}</CardTitle>
                 <Wallet className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">1,250 LATAM</div>
                 <p className="text-xs text-muted-foreground">
-                  Earning 8.5% APY
+                  {t("earning")} 8.5% APY
                 </p>
               </CardContent>
             </Card>
@@ -83,8 +85,8 @@ const Dashboard = () => {
           {/* Portfolio Chart */}
           <Card className="glass-card shadow-card mb-8">
             <CardHeader>
-              <CardTitle>Portfolio Value Over Time</CardTitle>
-              <CardDescription>Your total balance across all positions</CardDescription>
+              <CardTitle>{t("portfolioValue")}</CardTitle>
+              <CardDescription>{t("totalBalance")}</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={350}>
@@ -117,10 +119,10 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-secondary" />
-                  Earn More Yield
+                  {t("earnMoreYield")}
                 </CardTitle>
                 <CardDescription>
-                  Deposit into high-APY Morpho vaults
+                  {t("depositHighApy")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -129,10 +131,10 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Coins className="h-5 w-5 text-primary" />
-                  Mint Stablecoins
+                  {t("mintStablecoins")}
                 </CardTitle>
                 <CardDescription>
-                  Create USD, BRL, or ARS-pegged tokens
+                  {t("createPegged")}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -141,10 +143,10 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-accent" />
-                  Borrow Assets
+                  {t("borrowAssets")}
                 </CardTitle>
                 <CardDescription>
-                  Access overcollateralized loans
+                  {t("accessLoans")}
                 </CardDescription>
               </CardHeader>
             </Card>
