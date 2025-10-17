@@ -52,10 +52,25 @@ const SolDeFiApp = () => {
   const fetchPrice = async () => {
     try {
       const response = await fetch(`/api/app/price?lang=${language}`);
-      const data = await response.json();
-      setPriceData(data);
+      if (response.ok) {
+        const data = await response.json();
+        setPriceData(data);
+      } else {
+        setPriceData({
+          price: 0.04,
+          currency: 'USD',
+          lbp_period: { start: '2025-10-30', end: '2025-11-03' },
+          status: 'LBP starts Oct 30, 2025'
+        });
+      }
     } catch (error) {
       console.error('Failed to fetch price:', error);
+      setPriceData({
+        price: 0.04,
+        currency: 'USD',
+        lbp_period: { start: '2025-10-30', end: '2025-11-03' },
+        status: 'LBP starts Oct 30, 2025'
+      });
     }
   };
 
