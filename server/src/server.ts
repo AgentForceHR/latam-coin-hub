@@ -10,6 +10,8 @@ import stablecoinRoutes from './routes/stablecoin.js';
 import vaultsRoutes from './routes/vaults.js';
 import governanceRoutes from './routes/governance.js';
 import adminRoutes from './routes/admin.js';
+import landingRoutes from './routes/landing.js';
+import soldefiAppRoutes from './routes/soldefi-app.js';
 
 dotenv.config();
 
@@ -52,6 +54,8 @@ app.use('/api/stablecoin', stablecoinRoutes);
 app.use('/api/vaults', vaultsRoutes);
 app.use('/api/governance', governanceRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/landing', landingRoutes);
+app.use('/api/app', soldefiAppRoutes);
 
 app.use(errorHandler);
 
