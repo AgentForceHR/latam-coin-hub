@@ -12,6 +12,7 @@ import governanceRoutes from './routes/governance.js';
 import adminRoutes from './routes/admin.js';
 import landingRoutes from './routes/landing.js';
 import soldefiAppRoutes from './routes/soldefi-app.js';
+import betaRoutes from './routes/beta.js';
 
 dotenv.config();
 
@@ -56,6 +57,7 @@ app.use('/api/governance', governanceRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/landing', landingRoutes);
 app.use('/api/app', soldefiAppRoutes);
+app.use('/api/beta', betaRoutes);
 
 app.use(errorHandler);
 

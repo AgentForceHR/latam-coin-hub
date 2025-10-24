@@ -200,10 +200,18 @@ const Landing = () => {
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 {t("readySubtitle")}
               </p>
-              <Button size="lg" className="gradient-hero text-lg px-8 shadow-glow">
-                {t("connectAndStart")}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" className="gradient-hero text-lg px-8 shadow-glow">
+                  {t("connectAndStart")}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <Link to="/beta">
+                  <Button size="lg" variant="outline" className="text-lg px-8">
+                    Join Beta Testing
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
             </CardContent>
           </Card>
         </div>

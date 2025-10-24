@@ -1,0 +1,147 @@
+{
+  "info": {
+    "name": "Beta Tester Sign-up API",
+    "description": "API endpoints for Stablecoin DeFi beta tester sign-up (EST token project)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Beta",
+      "item": [
+        {
+          "name": "Sign Up (Spanish)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"nickname\": \"testuser\",\n  \"language\": \"es\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/beta/signup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "beta",
+                "signup"
+              ]
+            },
+            "description": "Register a new beta tester with Spanish language preference. Checks X follow status for @StablecoinDeFiLATAM and limits to 100 sign-ups."
+          },
+          "response": []
+        },
+        {
+          "name": "Sign Up (English)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"beta@example.com\",\n  \"nickname\": \"betauser\",\n  \"language\": \"en\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/beta/signup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "beta",
+                "signup"
+              ]
+            },
+            "description": "Register a new beta tester with English language preference."
+          },
+          "response": []
+        },
+        {
+          "name": "Sign Up (Portuguese)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"teste@example.com\",\n  \"nickname\": \"testador\",\n  \"language\": \"pt\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/beta/signup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "beta",
+                "signup"
+              ]
+            },
+            "description": "Register a new beta tester with Portuguese language preference."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Beta Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/beta/count",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "beta",
+                "count"
+              ]
+            },
+            "description": "Get the current count of beta testers and remaining spots (max 100). Also returns the deadline date."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        },
+        "description": "Check if the API server is running"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ]
+}

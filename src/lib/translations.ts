@@ -144,6 +144,19 @@ export const translations = {
 
     // Common
     days: "days",
+
+    // Beta
+    betaTitle: "Join as a Beta Tester!",
+    betaSubtitle: "Test our app for 1 week starting Oct 30, follow @StablecoinDeFiLATAM on X, and receive an EST airdrop + exclusive news",
+    betaNote: "Only 100 spots, hurry up! Sign-ups until Oct 29",
+    betaEmail: "Your email",
+    betaNickname: "Your nickname",
+    betaSubmit: "Sign me up!",
+    betaSuccess: "Successfully registered for Oct 30 beta!",
+    betaLimitReached: "Limit of 100 beta testers reached.",
+    betaAlreadyRegistered: "This email is already registered.",
+    betaBackToMain: "Back to Main Page",
+    betaSpotsRemaining: "spots remaining",
   },
   es: {
     // Navbar
@@ -290,6 +303,19 @@ export const translations = {
 
     // Common
     days: "días",
+
+    // Beta
+    betaTitle: "¡Únete como Beta Tester de Stablecoin DeFi!",
+    betaSubtitle: "Prueba nuestra app por 1 semana a partir del 30 de oct, sigue @StablecoinDeFiLATAM en X, y recibe un airdrop de EST + noticias exclusivas",
+    betaNote: "Solo 100 plazas, ¡apúrate! Sign-ups hasta el 29 de oct",
+    betaEmail: "Tu email",
+    betaNickname: "Tu apodo",
+    betaSubmit: "¡Registrarme!",
+    betaSuccess: "¡Registro exitoso para beta del 30 de oct!",
+    betaLimitReached: "Límite de 100 beta testers alcanzado.",
+    betaAlreadyRegistered: "Este email ya está registrado.",
+    betaBackToMain: "Volver a la Página Principal",
+    betaSpotsRemaining: "plazas restantes",
   },
   pt: {
     // Navbar
@@ -436,6 +462,19 @@ export const translations = {
 
     // Common
     days: "dias",
+
+    // Beta
+    betaTitle: "Junte-se como Beta Tester da Stablecoin DeFi!",
+    betaSubtitle: "Teste nosso app por 1 semana a partir de 30 de out, siga @StablecoinDeFiLATAM no X, e receba um airdrop de EST + notícias exclusivas",
+    betaNote: "Apenas 100 vagas, apresse-se! Inscrições até 29 de out",
+    betaEmail: "Seu email",
+    betaNickname: "Seu apelido",
+    betaSubmit: "Inscreva-se!",
+    betaSuccess: "Registrado com sucesso para o beta de 30 de out!",
+    betaLimitReached: "Limite de 100 beta testers alcançado.",
+    betaAlreadyRegistered: "Este email já está registrado.",
+    betaBackToMain: "Voltar à Página Principal",
+    betaSpotsRemaining: "vagas restantes",
   },
 };
 

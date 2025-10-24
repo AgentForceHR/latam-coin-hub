@@ -11,6 +11,7 @@ import Borrow from "./pages/Borrow";
 import Governance from "./pages/Governance";
 import SolDeFiLanding from "./pages/SolDeFiLanding";
 import SolDeFiApp from "./pages/SolDeFiApp";
+import Beta from "./pages/Beta";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/governance" element={<Governance />} />
             <Route path="/soldefi" element={<SolDeFiLanding />} />
             <Route path="/soldefi/app" element={<SolDeFiApp />} />
+            <Route path="/beta" element={<Beta />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
