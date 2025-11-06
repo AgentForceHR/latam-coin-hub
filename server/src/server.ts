@@ -45,7 +45,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    service: 'LATAM DeFi API',
+    service: 'Estable API',
     version: '1.0.0',
   });
 });

@@ -24,7 +24,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-lg gradient-hero" />
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              LATAM DeFi
+              Estable
             </span>
           </Link>
 

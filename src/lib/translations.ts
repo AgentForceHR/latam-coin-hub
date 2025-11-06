@@ -9,8 +9,8 @@ export const translations = {
 
     // Landing Hero
     heroTitle: "Empowering",
-    heroTitleHighlight: "LATAM Finance",
-    heroTitleEnd: "with Stablecoins & DeFi",
+    heroTitleHighlight: "Latin American Finance",
+    heroTitleEnd: "with Estable",
     heroSubtitle: "Hedge against inflation with USD, BRL, ARS, MXN, and COP-pegged stablecoins. Earn 4-8% APY, borrow against collateral, and participate in governance.",
     getStarted: "Get Started Free",
     viewDashboard: "View Dashboard",
@@ -134,13 +134,13 @@ export const translations = {
     delegateInfo: "Delegating allows experienced community members to vote on your behalf. You can revoke delegation at any time.",
 
     // Footer
-    footerDescription: "Empowering Latin American finance through decentralized stablecoins and DeFi protocols.",
+    footerDescription: "Empowering Latin American finance through Estable's decentralized stablecoins and DeFi protocols.",
     protocol: "Protocol",
     resources: "Resources",
     whitepaper: "Whitepaper",
     documentation: "Documentation",
     community: "Community",
-    rights: "© 2025 LATAM DeFi. All rights reserved.",
+    rights: "© 2025 Estable. All rights reserved.",
 
     // Common
     days: "days",
@@ -168,8 +168,8 @@ export const translations = {
 
     // Landing Hero
     heroTitle: "Empoderando las",
-    heroTitleHighlight: "Finanzas LATAM",
-    heroTitleEnd: "con Stablecoins y DeFi",
+    heroTitleHighlight: "Finanzas Latinoamericanas",
+    heroTitleEnd: "con Estable",
     heroSubtitle: "Protégete de la inflación con stablecoins vinculadas a USD, BRL y ARS. Gana 4-8% APY, pide préstamos garantizados y participa en la gobernanza.",
     getStarted: "Comenzar Gratis",
     viewDashboard: "Ver Panel",
@@ -293,13 +293,13 @@ export const translations = {
     delegateInfo: "Delegar permite que miembros experimentados de la comunidad voten en tu nombre. Puedes revocar la delegación en cualquier momento.",
 
     // Footer
-    footerDescription: "Empoderando las finanzas latinoamericanas a través de stablecoins descentralizadas y protocolos DeFi.",
+    footerDescription: "Empoderando las finanzas latinoamericanas a través de stablecoins y protocolos DeFi descentralizados de Estable.",
     protocol: "Protocolo",
     resources: "Recursos",
     whitepaper: "Whitepaper",
     documentation: "Documentación",
     community: "Comunidad",
-    rights: "© 2025 LATAM DeFi. Todos los derechos reservados.",
+    rights: "© 2025 Estable. Todos los derechos reservados.",
 
     // Common
     days: "días",
@@ -327,8 +327,8 @@ export const translations = {
 
     // Landing Hero
     heroTitle: "Empoderando as",
-    heroTitleHighlight: "Finanças LATAM",
-    heroTitleEnd: "com Stablecoins e DeFi",
+    heroTitleHighlight: "Finanças Latino-Americanas",
+    heroTitleEnd: "com Estable",
     heroSubtitle: "Proteja-se da inflação com stablecoins atreladas a USD, BRL e ARS. Ganhe 4-8% APY, faça empréstimos garantidos e participe da governança.",
     getStarted: "Começar Grátis",
     viewDashboard: "Ver Painel",
@@ -452,13 +452,13 @@ export const translations = {
     delegateInfo: "Delegar permite que membros experientes da comunidade votem em seu nome. Você pode revogar a delegação a qualquer momento.",
 
     // Footer
-    footerDescription: "Empoderando as finanças latino-americanas através de stablecoins descentralizadas e protocolos DeFi.",
+    footerDescription: "Empoderando as finanças latino-americanas através de stablecoins e protocolos DeFi descentralizados da Estable.",
     protocol: "Protocolo",
     resources: "Recursos",
     whitepaper: "Whitepaper",
     documentation: "Documentação",
     community: "Comunidade",
-    rights: "© 2025 LATAM DeFi. Todos os direitos reservados.",
+    rights: "© 2025 Estable. Todos os direitos reservados.",
 
     // Common
     days: "dias",

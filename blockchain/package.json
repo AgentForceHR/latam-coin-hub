@@ -1,7 +1,7 @@
 {
-  "name": "latam-defi-contracts",
+  "name": "estable-contracts",
   "version": "1.0.0",
-  "description": "Smart contracts for LATAM DeFi platform",
+  "description": "Smart contracts for Estable DeFi platform",
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",

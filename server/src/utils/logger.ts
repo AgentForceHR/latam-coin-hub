@@ -11,7 +11,7 @@ export const logger = winston.createLogger({
     winston.format.splat(),
     winston.format.json()
   ),
-  defaultMeta: { service: 'latam-defi-api' },
+  defaultMeta: { service: 'estable-api' },
   transports: [
     new winston.transports.File({ filename: path.join(logDir, 'error.log'), level: 'error' }),
     new winston.transports.File({ filename: path.join(logDir, 'app.log') }),

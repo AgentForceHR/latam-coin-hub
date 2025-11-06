@@ -1,5 +1,5 @@
 /*
-  # LATAM DeFi Platform Database Schema
+  # Estable DeFi Platform Database Schema
 
   1. New Tables
     - `users`
