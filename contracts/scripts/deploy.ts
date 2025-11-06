@@ -2,83 +2,127 @@ import { ethers } from "hardhat";
 import * as fs from "fs";
 import * as path from "path";
 
+interface DeployedContracts {
+  mockUSDC: string;
+  mockUSDT: string;
+  estToken: string;
+  yieldVault: string;
+  estStake: string;
+  network: string;
+  chainId: number;
+  deployer: string;
+  timestamp: number;
+}
+
 async function main() {
-  console.log("🚀 Starting Estable Beta Contracts Deployment to Base Sepolia...\n");
+  console.log("╔═══════════════════════════════════════════════════════════╗");
+  console.log("║   Estable Beta Contracts Deployment - Base Sepolia       ║");
+  console.log("╚═══════════════════════════════════════════════════════════╝\n");
 
   const [deployer] = await ethers.getSigners();
-  console.log("Deploying contracts with account:", deployer.address);
-  console.log("Account balance:", ethers.formatEther(await ethers.provider.getBalance(deployer.address)), "ETH\n");
+  const network = await ethers.provider.getNetwork();
 
-  const deployedContracts: any = {};
+  console.log("📋 Deployment Information:");
+  console.log("━".repeat(60));
+  console.log(`Deployer Address:  ${deployer.address}`);
+  console.log(`Network:           ${network.name}`);
+  console.log(`Chain ID:          ${network.chainId}`);
 
-  console.log("1. Deploying Mock USDC...");
-  const MockUSDC = await ethers.getContractFactory("MockUSDC");
-  const usdc = await MockUSDC.deploy();
-  await usdc.waitForDeployment();
-  const usdcAddress = await usdc.getAddress();
-  deployedContracts.mockUSDC = usdcAddress;
-  console.log("✅ Mock USDC deployed to:", usdcAddress);
-  console.log("");
-
-  console.log("2. Deploying Mock USDT...");
-  const MockUSDT = await ethers.getContractFactory("MockUSDT");
-  const usdt = await MockUSDT.deploy();
-  await usdt.waitForDeployment();
-  const usdtAddress = await usdt.getAddress();
-  deployedContracts.mockUSDT = usdtAddress;
-  console.log("✅ Mock USDT deployed to:", usdtAddress);
+  const balance = await ethers.provider.getBalance(deployer.address);
+  console.log(`Deployer Balance:  ${ethers.formatEther(balance)} ETH`);
+  console.log("━".repeat(60));
   console.log("");
 
-  console.log("3. Deploying Estable Token (EST)...");
-  const EstableToken = await ethers.getContractFactory("EstableToken");
-  const est = await EstableToken.deploy();
-  await est.waitForDeployment();
-  const estAddress = await est.getAddress();
-  deployedContracts.estableToken = estAddress;
-  console.log("✅ Estable Token deployed to:", estAddress);
-  console.log("");
+  const deployedContracts: DeployedContracts = {
+    mockUSDC: "",
+    mockUSDT: "",
+    estToken: "",
+    yieldVault: "",
+    estStake: "",
+    network: network.name,
+    chainId: Number(network.chainId),
+    deployer: deployer.address,
+    timestamp: Date.now(),
+  };
 
-  console.log("4. Deploying USDC Vault...");
-  const EstableVault = await ethers.getContractFactory("EstableVault");
-  const usdcVault = await EstableVault.deploy(usdcAddress, estAddress);
-  await usdcVault.waitForDeployment();
-  const usdcVaultAddress = await usdcVault.getAddress();
-  deployedContracts.usdcVault = usdcVaultAddress;
-  console.log("✅ USDC Vault deployed to:", usdcVaultAddress);
-  console.log("");
+  try {
+    console.log("1️⃣  Deploying MockUSDC...");
+    const MockUSDC = await ethers.getContractFactory("MockUSDC");
+    const mockUSDC = await MockUSDC.deploy();
+    await mockUSDC.waitForDeployment();
+    const mockUSDCAddress = await mockUSDC.getAddress();
+    deployedContracts.mockUSDC = mockUSDCAddress;
+    console.log(`✅ MockUSDC deployed to: ${mockUSDCAddress}\n`);
 
-  console.log("5. Deploying USDT Vault...");
-  const usdtVault = await EstableVault.deploy(usdtAddress, estAddress);
-  await usdtVault.waitForDeployment();
-  const usdtVaultAddress = await usdtVault.getAddress();
-  deployedContracts.usdtVault = usdtVaultAddress;
-  console.log("✅ USDT Vault deployed to:", usdtVaultAddress);
-  console.log("");
+    console.log("2️⃣  Deploying MockUSDT...");
+    const MockUSDT = await ethers.getContractFactory("MockUSDT");
+    const mockUSDT = await MockUSDT.deploy();
+    await mockUSDT.waitForDeployment();
+    const mockUSDTAddress = await mockUSDT.getAddress();
+    deployedContracts.mockUSDT = mockUSDTAddress;
+    console.log(`✅ MockUSDT deployed to: ${mockUSDTAddress}\n`);
 
-  const deploymentsPath = path.join(__dirname, "../deployments.json");
-  fs.writeFileSync(deploymentsPath, JSON.stringify(deployedContracts, null, 2));
+    console.log("3️⃣  Deploying EstToken...");
+    const EstToken = await ethers.getContractFactory("EstToken");
+    const estToken = await EstToken.deploy();
+    await estToken.waitForDeployment();
+    const estTokenAddress = await estToken.getAddress();
+    deployedContracts.estToken = estTokenAddress;
+    console.log(`✅ EstToken deployed to: ${estTokenAddress}\n`);
 
-  console.log("📄 Deployment addresses saved to deployments.json");
-  console.log("");
-  console.log("=".repeat(60));
-  console.log("DEPLOYMENT SUMMARY");
-  console.log("=".repeat(60));
-  console.log("Mock USDC:       ", usdcAddress);
-  console.log("Mock USDT:       ", usdtAddress);
-  console.log("Estable Token:   ", estAddress);
-  console.log("USDC Vault:      ", usdcVaultAddress);
-  console.log("USDT Vault:      ", usdtVaultAddress);
-  console.log("=".repeat(60));
-  console.log("");
-  console.log("⚠️  TESTNET ONLY - NO REAL VALUE");
-  console.log("🔗 Network: Base Sepolia (Chain ID: 84532)");
-  console.log("🌐 Explorer: https://sepolia.basescan.org");
-  console.log("");
-  console.log("Next steps:");
-  console.log("1. Copy deployments.json addresses to your .env file");
-  console.log("2. Verify contracts on BaseScan (optional)");
-  console.log("3. Test faucet functions to get test tokens");
-  console.log("");
+    console.log("4️⃣  Deploying YieldVault...");
+    const YieldVault = await ethers.getContractFactory("YieldVault");
+    const yieldVault = await YieldVault.deploy(
+      estTokenAddress,
+      "Estable Yield Vault",
+      "eyvUSD"
+    );
+    await yieldVault.waitForDeployment();
+    const yieldVaultAddress = await yieldVault.getAddress();
+    deployedContracts.yieldVault = yieldVaultAddress;
+    console.log(`✅ YieldVault deployed to: ${yieldVaultAddress}`);
+
+    console.log("   Adding supported assets...");
+    await yieldVault.addAsset(mockUSDCAddress, 800);
+    console.log("   ✓ Added mUSDC");
+    await yieldVault.addAsset(mockUSDTAddress, 1200);
+    console.log("   ✓ Added mUSDT\n");
+
+    console.log("5️⃣  Deploying EstStake...");
+    const EstStake = await ethers.getContractFactory("EstStake");
+    const estStake = await EstStake.deploy(estTokenAddress);
+    await estStake.waitForDeployment();
+    const estStakeAddress = await estStake.getAddress();
+    deployedContracts.estStake = estStakeAddress;
+    console.log(`✅ EstStake deployed to: ${estStakeAddress}\n`);
+
+    const deploymentsPath = path.join(__dirname, "../deployments.json");
+    fs.writeFileSync(deploymentsPath, JSON.stringify(deployedContracts, null, 2));
+
+    console.log("╔═══════════════════════════════════════════════════════════╗");
+    console.log("║              DEPLOYMENT SUMMARY                           ║");
+    console.log("╚═══════════════════════════════════════════════════════════╝");
+    console.log("");
+    console.log("Contract Addresses:");
+    console.log("━".repeat(60));
+    console.log(`MockUSDC:     ${mockUSDCAddress}`);
+    console.log(`MockUSDT:     ${mockUSDTAddress}`);
+    console.log(`EstToken:     ${estTokenAddress}`);
+    console.log(`YieldVault:   ${yieldVaultAddress}`);
+    console.log(`EstStake:     ${estStakeAddress}`);
+    console.log("━".repeat(60));
+    console.log("");
+    console.log("⚠️  TESTNET ONLY - NO REAL VALUE");
+    console.log("🔗 Explorer: https://sepolia.basescan.org");
+    console.log("");
+    console.log("Next: Update .env with addresses and verify contracts:");
+    console.log("npx hardhat verify --network baseSepolia <ADDRESS>");
+    console.log("");
+
+  } catch (error: any) {
+    console.error("\n❌ Deployment failed:", error.message);
+    process.exit(1);
+  }
 }
 
 main()

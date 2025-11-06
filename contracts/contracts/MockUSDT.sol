@@ -4,20 +4,51 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+/**
+ * @title MockUSDT
+ * @dev Mock USDT token for testing purposes on Base Sepolia
+ * Features 6 decimals to match real USDT
+ */
 contract MockUSDT is ERC20, Ownable {
-    constructor() ERC20("Mock Tether USD", "USDT") Ownable(msg.sender) {
-        _mint(msg.sender, 1000000 * 10**6);
+    uint8 private constant DECIMALS = 6;
+
+    event Faucet(address indexed recipient, uint256 amount);
+
+    constructor() ERC20("Mock USDT", "mUSDT") Ownable(msg.sender) {
+        // Mint 1 trillion tokens to deployer (1e12 with 6 decimals = 1e18)
+        _mint(msg.sender, 1_000_000_000_000 * 10**DECIMALS);
     }
 
+    /**
+     * @dev Returns 6 decimals to match real USDT
+     */
     function decimals() public pure override returns (uint8) {
-        return 6;
+        return DECIMALS;
     }
 
-    function mint(address to, uint256 amount) external {
+    /**
+     * @dev Mint tokens to specified address
+     * @param to Recipient address
+     * @param amount Amount to mint (in token units, not wei)
+     */
+    function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
     }
 
+    /**
+     * @dev Public faucet for testing - gives 10,000 mUSDT per call
+     * Anyone can call this to get test tokens
+     */
     function faucet() external {
-        _mint(msg.sender, 1000 * 10**6);
+        uint256 faucetAmount = 10_000 * 10**DECIMALS;
+        _mint(msg.sender, faucetAmount);
+        emit Faucet(msg.sender, faucetAmount);
+    }
+
+    /**
+     * @dev Convenience function to get faucet amount for testing
+     */
+    function faucetAmount() external pure returns (uint256) {
+        return 10_000 * 10**DECIMALS;
     }
 }
