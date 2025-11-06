@@ -153,7 +153,7 @@ const Earn = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Lock className="h-5 w-5 text-primary" />
-                {t("stakeLatam")}
+                {t("stakeEstable")}
               </CardTitle>
               <CardDescription>
                 {t("stakeDescription")}
