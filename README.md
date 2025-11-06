@@ -1,4 +1,18 @@
-# Welcome to your Lovable project
+# Estable - Yield Optimization Protocol
+
+Full-stack DeFi platform with beta testing dApp on Base Sepolia testnet.
+
+## 🚀 Quick Start (Beta Testing)
+
+See **[README_BETA.md](./README_BETA.md)** for comprehensive beta testing setup and instructions.
+
+```bash
+npm install
+npm run hardhat:compile
+npm run dev
+```
+
+Visit `http://localhost:5173/beta/test` for the beta testing interface.
 
 ## Project info
 
