@@ -4,20 +4,27 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { Sparkles, ArrowLeft, Users, Calendar, Gift } from 'lucide-react';
+import TokenFaucet from '@/components/TokenFaucet';
+import GasFaucet from '@/components/GasFaucet';
+import DemoFlow from '@/components/DemoFlow';
+import { Sparkles, ArrowLeft, Users, Calendar, Gift, Wallet } from 'lucide-react';
 import { toast } from 'sonner';
+import { useWeb3 } from '@/contexts/Web3Context';
 
 const Beta = () => {
   const { language } = useLanguage();
   const t = translations[language];
+  const { address, isConnected, connect } = useWeb3();
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [loading, setLoading] = useState(false);
   const [remaining, setRemaining] = useState<number | null>(null);
+  const [showTestingSection, setShowTestingSection] = useState(false);
 
   useEffect(() => {
     fetchRemainingSpots();
@@ -190,6 +197,69 @@ const Beta = () => {
               <p className="text-sm text-gray-400">First come, first served</p>
             </CardContent>
           </Card>
+        </div>
+
+        <div className="mt-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Start Testing Now
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Get test tokens and explore the yield optimization features on Base Sepolia testnet
+            </p>
+          </div>
+
+          <Tabs defaultValue="tokens" className="max-w-6xl mx-auto">
+            <TabsList className="grid w-full grid-cols-3 bg-black/50 border border-yellow-500/20">
+              <TabsTrigger value="tokens" className="data-[state=active]:bg-yellow-500/20">
+                Test Tokens
+              </TabsTrigger>
+              <TabsTrigger value="gas" className="data-[state=active]:bg-blue-500/20">
+                Gas Faucets
+              </TabsTrigger>
+              <TabsTrigger value="demo" className="data-[state=active]:bg-purple-500/20">
+                Quick Demo
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="tokens" className="mt-6">
+              <div className="grid md:grid-cols-1 gap-6">
+                <TokenFaucet onClaimSuccess={() => setShowTestingSection(true)} />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="gas" className="mt-6">
+              <div className="grid md:grid-cols-1 gap-6">
+                <GasFaucet />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="demo" className="mt-6">
+              <div className="grid md:grid-cols-1 gap-6">
+                <DemoFlow />
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          {isConnected && (
+            <div className="mt-8 text-center">
+              <Card className="bg-black/30 border-green-500/20 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Wallet className="w-5 h-5 text-green-500" />
+                    <span className="text-sm text-green-400 font-medium">
+                      Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
+                    </span>
+                  </div>
+                  <Link to="/beta/test">
+                    <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold">
+                      Open Full Testing Dashboard
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
 
         <footer className="mt-16 text-center text-gray-500 text-sm">
