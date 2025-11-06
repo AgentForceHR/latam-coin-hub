@@ -24,7 +24,7 @@ export const translations: Record<Language, TranslationMessages> = {
       notFound: 'Resource not found',
       serverError: 'Internal server error',
       lockNotExpired: 'Stake lock period has not expired',
-      minimumStakeRequired: 'Minimum 100 LATAM tokens required to vote',
+      minimumStakeRequired: 'Minimum 100 EST tokens required to vote',
     },
   },
   es: {
@@ -50,7 +50,7 @@ export const translations: Record<Language, TranslationMessages> = {
       notFound: 'Recurso no encontrado',
       serverError: 'Error interno del servidor',
       lockNotExpired: 'El período de bloqueo del stake no ha expirado',
-      minimumStakeRequired: 'Se requieren mínimo 100 tokens LATAM para votar',
+      minimumStakeRequired: 'Se requieren mínimo 100 tokens EST para votar',
     },
   },
   pt: {
@@ -76,7 +76,7 @@ export const translations: Record<Language, TranslationMessages> = {
       notFound: 'Recurso não encontrado',
       serverError: 'Erro interno do servidor',
       lockNotExpired: 'O período de bloqueio do stake não expirou',
-      minimumStakeRequired: 'Mínimo de 100 tokens LATAM necessários para votar',
+      minimumStakeRequired: 'Mínimo de 100 tokens EST necessários para votar',
     },
   },
 };

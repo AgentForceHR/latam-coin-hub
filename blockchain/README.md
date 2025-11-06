@@ -58,7 +58,7 @@ npx hardhat verify --network bscTestnet <CONTRACT_ADDRESS>
 
 ## Contracts
 
-### LATAMToken.sol
+### EstableToken.sol
 - ERC20 governance token
 - 1 billion max supply
 - 100 million initial supply
@@ -72,7 +72,7 @@ npx hardhat verify --network bscTestnet <CONTRACT_ADDRESS>
 - Redeemable for BNB collateral
 
 ### Staking.sol
-- Stake LATAM tokens
+- Stake EST tokens
 - Lock periods: 3-12 months
 - Voting power (ve-power)
 - APY rewards: 5-15%
@@ -84,7 +84,7 @@ After deployment, addresses are saved in `deployments.json`:
 
 ```json
 {
-  "latamToken": "0x...",
+  "estableToken": "0x...",
   "usdStablecoin": "0x...",
   "brlStablecoin": "0x...",
   "arsStablecoin": "0x...",
@@ -122,7 +122,7 @@ npm test
 ## Gas Costs (Estimated)
 
 On BSC Testnet:
-- LATAM Token: ~0.005 BNB
+- Estable Token: ~0.005 BNB
 - Stablecoin: ~0.004 BNB each
 - Staking: ~0.006 BNB
 - **Total**: ~0.023 BNB (~$5-10 on mainnet)

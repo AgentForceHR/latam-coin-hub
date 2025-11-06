@@ -7,10 +7,10 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title Staking
- * @dev Stake LATAM tokens for voting power and rewards
+ * @dev Stake Estable tokens for voting power and rewards
  */
 contract Staking is Ownable, ReentrancyGuard {
-    IERC20 public latamToken;
+    IERC20 public estableToken;
 
     uint256 public constant EARLY_UNSTAKE_PENALTY = 10; // 10% penalty
     uint256 public constant MIN_LOCK_MONTHS = 3;
@@ -31,19 +31,19 @@ contract Staking is Ownable, ReentrancyGuard {
     event Unstaked(address indexed user, uint256 stakeId, uint256 amount, uint256 penalty);
     event RewardsClaimed(address indexed user, uint256 amount);
 
-    constructor(address _latamToken) Ownable(msg.sender) {
-        latamToken = IERC20(_latamToken);
+    constructor(address _estableToken) Ownable(msg.sender) {
+        estableToken = IERC20(_estableToken);
     }
 
     /**
-     * @dev Stake LATAM tokens
+     * @dev Stake Estable tokens
      * @param amount Amount to stake
      * @param lockMonths Lock period in months (3-12)
      */
     function stake(uint256 amount, uint256 lockMonths) public nonReentrant {
         require(amount > 0, "Amount must be greater than 0");
         require(lockMonths >= MIN_LOCK_MONTHS && lockMonths <= MAX_LOCK_MONTHS, "Invalid lock period");
-        require(latamToken.transferFrom(msg.sender, address(this), amount), "Transfer failed");
+        require(estableToken.transferFrom(msg.sender, address(this), amount), "Transfer failed");
 
         // Calculate ve-power: base amount + bonus based on lock period
         uint256 vePower = amount + (amount * lockMonths * 8) / 100;
@@ -88,7 +88,7 @@ contract Staking is Ownable, ReentrancyGuard {
         totalStaked[msg.sender] -= userStake.amount;
         totalVotingPower -= userStake.vePower;
 
-        require(latamToken.transfer(msg.sender, amountToReturn), "Transfer failed");
+        require(estableToken.transfer(msg.sender, amountToReturn), "Transfer failed");
 
         emit Unstaked(msg.sender, stakeId, amountToReturn, penalty);
     }
@@ -146,7 +146,7 @@ contract Staking is Ownable, ReentrancyGuard {
      * @dev Emergency withdraw (only owner)
      */
     function emergencyWithdraw() public onlyOwner {
-        uint256 balance = latamToken.balanceOf(address(this));
-        require(latamToken.transfer(owner(), balance), "Transfer failed");
+        uint256 balance = estableToken.balanceOf(address(this));
+        require(estableToken.transfer(owner(), balance), "Transfer failed");
     }
 }

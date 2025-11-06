@@ -55,7 +55,7 @@
     - `stakes`
       - `id` (uuid, primary key) - Stake identifier
       - `user_id` (uuid, foreign key) - Reference to users table
-      - `amount` (decimal) - Staked LATAM token amount
+      - `amount` (decimal) - Staked EST token amount
       - `locked_until` (timestamptz) - Lock expiration date
       - `ve_power` (decimal) - Vote-escrow power calculation
       - `created_at` (timestamptz) - Stake creation timestamp

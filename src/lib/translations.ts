@@ -367,7 +367,7 @@ export const translations = {
     stablecoinBalance: "Saldo de Stablecoins",
     morphoYields: "Rendimentos Morpho",
     borrowPositions: "Posições de Empréstimo",
-    stakedEstable: "LATAM em Staking",
+    stakedEstable: "EST em Staking",
     portfolioValue: "Valor do Portfólio",
     totalBalance: "Seu saldo total em todas as posições",
     earnMoreYield: "Ganhar Mais Rendimento",
