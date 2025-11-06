@@ -11,13 +11,13 @@ const router = Router();
 
 const mintSchema = Joi.object({
   amount: Joi.number().positive().required(),
-  symbol: Joi.string().valid('USD', 'BRL', 'ARS').required(),
+  symbol: Joi.string().valid('USD', 'BRL', 'ARS', 'MXN', 'COP').required(),
   collateral_amount: Joi.number().positive().required(),
 });
 
 const redeemSchema = Joi.object({
   amount: Joi.number().positive().required(),
-  symbol: Joi.string().valid('USD', 'BRL', 'ARS').required(),
+  symbol: Joi.string().valid('USD', 'BRL', 'ARS', 'MXN', 'COP').required(),
 });
 
 router.post('/mint', auth, async (req: AuthRequest, res: Response): Promise<void> => {

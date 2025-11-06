@@ -12,6 +12,8 @@ export const PEG_RATES = {
   USD: 1,
   BRL: 5.5,
   ARS: 950,
+  MXN: 17,
+  COP: 4000,
 };
 
 export const calculateHealthFactor = (collateral: number, borrowed: number, collateralRatio: number = 1.5): number => {
